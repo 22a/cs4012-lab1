@@ -1,102 +1,61 @@
-module Shapes(
-  Shape, Point, Vector, Transform, Drawing,
-  point, getX, getY,
-  empty, circle, square,
-  identity, translate, rotate, scale, (<+>),
-  inside)  where
+module Shapes() where
+
+import Data.Matrix
 
 -- Utilities
 
-data Vector = Vector Double Double
-              deriving Show
-vector = Vector
+pos :: Double -> Double -> Matrix Double
+pos cx cy = fromLists [ [cx], [cy], [1] ]
 
-cross :: Vector -> Vector -> Double
-cross (Vector a b) (Vector a' b') = a * a' + b * b'
+trans_mat :: Double -> Double -> Double -> Double -> Double -> Double -> Matrix Double
+trans_mat a b c d e f = fromLists [ [a,c,e],
+                                    [b,d,f],
+                                    [0,0,1] ]
 
-mult :: Matrix -> Vector -> Vector
-mult (Matrix r0 r1) v = Vector (cross r0 v) (cross r1 v)
+do_trans :: Matrix Double -> Matrix Double -> Matrix Double
+do_trans cur_pos trans = multStd cur_pos trans
 
-invert :: Matrix -> Matrix
-invert (Matrix (Vector a b) (Vector c d)) = matrix (d / k) (-b / k) (-c / k) (a / k)
-  where k = a * d - b * c
+-- Styles
 
--- 2x2 square matrices are all we need.
-data Matrix = Matrix Vector Vector
-              deriving Show
-
-matrix :: Double -> Double -> Double -> Double -> Matrix
-matrix a b c d = Matrix (Vector a b) (Vector c d)
-
-getX (Vector x y) = x
-getY (Vector x y) = y
+data Style = Style Double String String
+           deriving Show
 
 -- Shapes
 
-type Point  = Vector
-
-point :: Double -> Double -> Point
-point = vector
-
-data Style = Style Int String String
+data Shape = Empty
+           | Circle
+           | Square
            deriving Show
 
-data Shape = Empty
-           | Circle Style
-           | Square Style
-             deriving Show
-
-empty :: Shape
+empty, circle, square :: Shape
 empty = Empty
-
-circle, square :: Int -> String -> String -> Shape
-circle sw sc fc = Circle (Style sw sc fc)
-square sw sc fc = Square (Style sw sc fc)
+circle = Circle
+square = Square
 
 -- Transformations
 
 data Transform = Identity
-           | Translate Vector
-           | Scale Vector
+           | Translate Double Double
+           | Scale Double Double
+           | Rotate Double
            | Compose Transform Transform
-           | Rotate Matrix
              deriving Show
 
 identity = Identity
 translate = Translate
 scale = Scale
-rotate angle = Rotate $ matrix (cos angle) (-sin angle) (sin angle) (cos angle)
+rotate = Rotate
 t0 <+> t1 = Compose t0 t1
 
-transform :: Transform -> Point -> Point
-transform Identity                   x = id x
-transform (Translate (Vector tx ty)) (Vector px py)  = Vector (px - tx) (py - ty)
-transform (Scale (Vector tx ty))     (Vector px py)  = Vector (px / tx)  (py / ty)
-transform (Rotate m)                 p = (invert m) `mult` p
-transform (Compose t1 t2)            p = transform t2 $ transform t1 p
+transform :: Transform -> Matrix Double -> Matrix Double
+transform Identity x = id x
+transform (Translate tx ty) m = do_trans m (trans_mat 1 0 0 1 tx ty)
+transform (Scale sx sy) m = do_trans m (trans_mat sx 0 0 sy 0 0)
+transform (Rotate a) m = do_trans m (trans_mat (cos a) (sin a) (-sin a) (cos a) 0 0)
+transform (Compose t1 t2) m = transform t2 $ transform t1 m
 
 -- Drawings
 
-type Drawing = [(Transform,Shape)]
+type Drawing = [(Transform,Shape,Style)]
 
 -- interpretation function for drawings
-
-inside :: Point -> Drawing -> Bool
-inside p d = or $ map (inside1 p) d
-
-inside1 :: Point -> (Transform, Shape) -> Bool
-inside1 p (t,s) = insides (transform t p) s
-
-insides :: Point -> Shape -> Bool
-p `insides` Empty = False
-p `insides` Circle _ = distance p <= 1
-p `insides` Square _ = maxnorm  p <= 1
-
-
-distance :: Point -> Double
-distance (Vector x y ) = sqrt ( x**2 + y**2 )
-
-maxnorm :: Point -> Double
-maxnorm (Vector x y ) = max (abs x) (abs y)
-
-testShape = (scale (point 10 10), circle 1 "#000000" "#FFFFFF")
