@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>SVGoodness</title>
+  </head>
+  <body>
+    <input type="text" id="input">
+    <button type="button" id="button" onclick="go()">Click Me!</button>
+    <script>
+      var go = function(){
+        var input = document.getElementById("input").value
+        console.log(input)
+        var enc = btoa(input)
+        console.log(enc)
+        var url = location.href + enc
+        console.log(url)
+        location.href = url
+      }
+    </script>
+  </body>
+</html>

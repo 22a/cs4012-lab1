@@ -1,4 +1,4 @@
-module Shapes(Drawing, Transform, Shape, Style, empty, circle, square, tToMatStr, transform, ident, translate, scale, rotate, (<+>), getA, getB, getC, getD, getE, getF) where
+module Shapes(Drawing, Transform, Shape, Style, empty, circle, square, transform, ident, translate, scale, rotate, (<+>), getA, getB, getC, getD, getE, getF) where
 
 import Data.Matrix
 
@@ -21,7 +21,7 @@ type Style = (Double,String,String)
 data Shape = Empty
            | Circle
            | Square
-           deriving Show
+           deriving (Show, Read)
 
 empty, circle, square :: Shape
 empty = Empty
@@ -35,7 +35,7 @@ data Transform = Ident
            | Scale Double Double
            | Rotate Double
            | Compose Transform Transform
-             deriving Show
+             deriving (Show, Read)
 
 ident = Ident
 translate = Translate
@@ -54,9 +54,6 @@ transform (Compose t1 t2) = mat_mul (transform t1) (transform t2)
 type Drawing = (Transform,Shape,Style)
 
 -- interpretation function for drawings
-
-tToMatStr :: Matrix Double -> String
-tToMatStr m =  foldr (++) "" (map show [(getElem 1 1 m),(getElem 2 1 m),(getElem 1 2 m),(getElem 2 2 m),(getElem 1 3 m),(getElem 2 3 m)])
 
 getA :: Matrix Double -> Double
 getA m = getElem 1 1 m

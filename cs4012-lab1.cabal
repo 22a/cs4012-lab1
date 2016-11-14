@@ -30,6 +30,7 @@ executable cs4012-lab1-exe
                      , blaze-svg
                      , scotty
                      , text
+                     , base64-string
   default-language:    Haskell2010
 
 test-suite cs4012-lab1-test
