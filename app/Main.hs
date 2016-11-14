@@ -21,8 +21,9 @@ main = scotty 3000 $ do
       let a = renderSvg svgDoc
       html (L.pack a)
     get "/:word" $ do
-        beam <- param "word"
-        html $ mconcat ["<h1>Fucking, Scotty ", beam, " me up!</h1>"]
+        -- beam <- param "word"
+        let a = renderSvg (drawingToSvg (((scale 2 2) <+> (translate 10 0)), square,(2.0,"hi","bye") ))
+        html (L.pack a)
 
 svgDoc :: S.Svg
 svgDoc = S.docTypeSvg ! A.version "1.1" ! A.width "500" ! A.height "500" ! A.viewbox "0 0 50 50" $ do
@@ -30,5 +31,7 @@ svgDoc = S.docTypeSvg ! A.version "1.1" ! A.width "500" ! A.height "500" ! A.vie
     S.rect ! A.width "5" ! A.height "5" ! A.fill "#0000ff"
     S.rect ! A.width "1" ! A.height "1" ! A.fill "#00ff00"
 
--- drawingToSvg :: Drawing -> S.Svg
--- drawingToSvg [(ts,shape,style): xs] =
+drawingToSvg :: (Transform, Shape, Style) -> S.Svg
+drawingToSvg (ts,shape,style) = S.docTypeSvg ! A.version "1.1" ! A.width "500" ! A.height "500" ! A.viewbox "0 0 50 50" $ do
+  let m = transform ts
+  S.rect ! A.width "10" ! A.height "10" ! A.fill "#ff0000" ! A.transform (S.matrix (getA m) (getB m) (getC m) (getD m) (getE m) (getF m))
