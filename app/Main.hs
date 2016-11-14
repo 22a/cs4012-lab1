@@ -22,7 +22,7 @@ main = scotty 3000 $ do
       html (L.pack a)
     get "/:word" $ do
         -- beam <- param "word"
-        let a = renderSvg (drawingToSvg (((scale 2 2) <+> (translate 10 0)), square,(2.0,"hi","bye") ))
+        let a = renderSvg (drawingToSvg (((scale 2 2) <+> (translate 2 3)), square,(1,"#000000","#ff0000") ))
         html (L.pack a)
 
 svgDoc :: S.Svg
@@ -32,6 +32,6 @@ svgDoc = S.docTypeSvg ! A.version "1.1" ! A.width "500" ! A.height "500" ! A.vie
     S.rect ! A.width "1" ! A.height "1" ! A.fill "#00ff00"
 
 drawingToSvg :: (Transform, Shape, Style) -> S.Svg
-drawingToSvg (ts,shape,style) = S.docTypeSvg ! A.version "1.1" ! A.width "500" ! A.height "500" ! A.viewbox "0 0 50 50" $ do
+drawingToSvg (ts,shape,(sw,sc,fc)) = S.docTypeSvg ! A.version "1.1" ! A.width "500" ! A.height "500" ! A.viewbox "0 0 50 50" $ do
   let m = transform ts
-  S.rect ! A.width "10" ! A.height "10" ! A.fill "#ff0000" ! A.transform (S.matrix (getA m) (getB m) (getC m) (getD m) (getE m) (getF m))
+  S.rect ! A.width "10" ! A.height "10" ! A.strokeWidth (S.toValue sw) ! A.stroke (S.toValue sc) ! A.fill (S.toValue fc) ! A.transform (S.matrix (getA m) (getB m) (getC m) (getD m) (getE m) (getF m))
