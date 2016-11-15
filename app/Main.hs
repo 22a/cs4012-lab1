@@ -38,8 +38,11 @@ drawingToSvg :: Drawing -> S.Svg
 drawingToSvg shapes = S.docTypeSvg ! A.version "1.1" ! A.width "500" ! A.height "500" ! A.viewbox "0 0 50 50" $ mapM_ shapeToSvgShape shapes
 
 shapeToSvgShape :: (Transform, Shape, Style) -> S.Svg
-shapeToSvgShape (ts,shape,(sw,sc,fc)) = S.rect ! A.width "10" ! A.height "10" ! A.strokeWidth (S.toValue sw) ! A.stroke (S.toValue sc) ! A.fill (S.toValue fc) ! A.transform (S.matrix (getA m) (getB m) (getC m) (getD m) (getE m) (getF m))
+shapeToSvgShape (ts,shape,(sw,sc,fc)) = sh ! A.strokeWidth (S.toValue sw) ! A.stroke (S.toValue sc) ! A.fill (S.toValue fc) ! A.transform (S.matrix (getA m) (getB m) (getC m) (getD m) (getE m) (getF m))
   where m = transform ts
+        sh
+          | shape == circle = S.circle ! A.cx "1" ! A.cy "1" ! A.r "2"
+          | shape == square = S.rect ! A.width "10" ! A.height "10"
 
 base64ToDrawing :: String -> Drawing
 base64ToDrawing s = read (decode s)

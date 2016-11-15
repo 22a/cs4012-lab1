@@ -1,4 +1,4 @@
-module Shapes(Drawing, Transform, Shape, Style, empty, circle, square, transform, ident, translate, scale, rotate, (<+>), getA, getB, getC, getD, getE, getF) where
+module Shapes(Drawing, Transform, Shape, Style, empty, circle, square, transform, ident, translate, scale, skewx, skewy, rotate, (<+>), getA, getB, getC, getD, getE, getF) where
 
 import Data.Matrix
 
@@ -21,7 +21,7 @@ type Style = (Double,String,String)
 data Shape = Empty
            | Circle
            | Square
-           deriving (Show, Read)
+           deriving (Show, Read, Eq)
 
 empty, circle, square :: Shape
 empty = Empty
@@ -34,6 +34,8 @@ data Transform = Ident
            | Translate Double Double
            | Scale Double Double
            | Rotate Double
+           | SkewX Double
+           | SkewY Double
            | Compose Transform Transform
              deriving (Show, Read)
 
@@ -41,12 +43,16 @@ ident = Ident
 translate = Translate
 scale = Scale
 rotate = Rotate
+skewx = SkewX
+skewy = SkewY
 t0 <+> t1 = Compose t0 t1
 
 transform :: Transform -> Matrix Double
 transform Ident = (trans_mat 1 0 0 1 0 0)
 transform (Translate tx ty) = (trans_mat 1 0 0 1 tx ty)
 transform (Scale sx sy) = (trans_mat sx 0 0 sy 0 0)
+transform (SkewX a) = (trans_mat 1 0 (tan a) 1 0 0)
+transform (SkewY a) = (trans_mat 1 (tan a) 0 1 0 0)
 transform (Rotate a) = (trans_mat (cos a) (sin a) (-sin a) (cos a) 0 0)
 transform (Compose t1 t2) = mat_mul (transform t1) (transform t2)
 
