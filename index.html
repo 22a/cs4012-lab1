@@ -6,7 +6,7 @@
     <title>SVGoodness</title>
     <style type="text/css" media="screen">
       input{
-        width: 500px;
+        width: 800px;
         height: 40px;
       }
     </style>
@@ -16,7 +16,7 @@
     <button type="button" id="default_button" onclick="go('default_input')">Click Me!</button>
     <br>
 
-    <input type="text" id="double_input" value='[(Compose (Scale 2.0 2.0) (Translate 2.0 3.0),Square,(1,"#000000","#ff0000")),(Compose (Scale 1.0 1.0) (Translate 8.0 3.0),Square,(1,"#00ff00","#ff00ff")),((Translate 12.5 12.5),Circle,(1,"#00ffff","#0000ff"))]'>
+    <input type="text" id="double_input" value='[(Compose (Translate 20.0 4.0) (SkewX -10),Square,(3,"#000000","#ff0000")),(Compose (Scale 1.0 1.0) (Translate 24.0 24.0),Square,(1,"#00ff00","#ff00ff")),(Compose (Translate 12.5 12.5) (SkewY 45),Circle,(1,"#00ffff","#0000ff"))]'>
     <button type="button" id="double_button" onclick="go('double_input')">Click Me!</button>
     <br>
 

@@ -12,6 +12,9 @@ trans_mat a b c d e f = fromLists [ [a,c,e],
 mat_mul :: Matrix Double -> Matrix Double -> Matrix Double
 mat_mul t1 t2 = multStd t1 t2
 
+deg_to_rad :: Double -> Double
+deg_to_rad deg = deg * (pi / 180)
+
 -- Styles
 
 type Style = (Double,String,String)
@@ -42,9 +45,9 @@ data Transform = Ident
 ident = Ident
 translate = Translate
 scale = Scale
-rotate = Rotate
-skewx = SkewX
-skewy = SkewY
+rotate a = Rotate (deg_to_rad a)
+skewx a = SkewX (deg_to_rad a)
+skewy a = SkewY (deg_to_rad a)
 t0 <+> t1 = Compose t0 t1
 
 transform :: Transform -> Matrix Double
