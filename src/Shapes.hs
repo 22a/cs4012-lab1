@@ -49,6 +49,7 @@ transform (Translate tx ty) = (trans_mat 1 0 0 1 tx ty)
 transform (Scale sx sy) = (trans_mat sx 0 0 sy 0 0)
 transform (Rotate a) = (trans_mat (cos a) (sin a) (-sin a) (cos a) 0 0)
 transform (Compose t1 t2) = mat_mul (transform t1) (transform t2)
+
 -- Drawings
 
 type Drawing = (Transform,Shape,Style)
