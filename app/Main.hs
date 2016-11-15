@@ -19,20 +19,15 @@ import Data.Monoid (mconcat)
 
 main = scotty 3000 $ do
     get "/" $ file "index.html"
-    get "/cool" $ do
-        let a = renderSvg (drawingToSvg [(((scale 2 2) <+> (translate 2 3)), square,(1,"#000000","#ff0000") )])
-        html (L.pack a)
-    get "/:word" $ do
-        encStr <- param "word"
-        let d = base64ToDrawing encStr
-        let a = renderSvg (drawingToSvg d)
-        html (L.pack a)
 
-svgDoc :: S.Svg
-svgDoc = S.docTypeSvg ! A.version "1.1" ! A.width "500" ! A.height "500" ! A.viewbox "0 0 50 50" $ do
-    S.rect ! A.width "10" ! A.height "10" ! A.fill "#ff0000" ! A.rotate "30 5 5"
-    S.rect ! A.width "5" ! A.height "5" ! A.fill "#0000ff"
-    S.rect ! A.width "1" ! A.height "1" ! A.fill "#00ff00"
+    get "/:end" $ do
+        encStr <- param "enc"
+        let d = base64ToDrawing encStr
+        let s = renderSvg (drawingToSvg d)
+        html (L.pack s)
+
+base64ToDrawing :: String -> Drawing
+base64ToDrawing s = read (decode s)
 
 drawingToSvg :: Drawing -> S.Svg
 drawingToSvg shapes = S.docTypeSvg ! A.version "1.1" ! A.width "500" ! A.height "500" ! A.viewbox "0 0 50 50" $ mapM_ shapeToSvgShape shapes
@@ -44,5 +39,3 @@ shapeToSvgShape (ts,shape,(sw,sc,fc)) = sh ! A.strokeWidth (S.toValue sw) ! A.st
           | shape == circle = S.circle ! A.cx "1" ! A.cy "1" ! A.r "2"
           | shape == square = S.rect ! A.width "10" ! A.height "10"
 
-base64ToDrawing :: String -> Drawing
-base64ToDrawing s = read (decode s)

@@ -1,4 +1,24 @@
-module Shapes(Drawing, Transform, Shape, Style, empty, circle, square, transform, ident, translate, scale, skewx, skewy, rotate, (<+>), getA, getB, getC, getD, getE, getF) where
+module Shapes(Drawing,
+             Transform,
+             Shape,
+             Style,
+             empty,
+             circle,
+             square,
+             transform,
+             ident,
+             translate,
+             scale,
+             skewx,
+             skewy,
+             rotate,
+             (<+>),
+             getA,
+             getB,
+             getC,
+             getD,
+             getE,
+             getF) where
 
 import Data.Matrix
 
@@ -16,7 +36,8 @@ deg_to_rad :: Double -> Double
 deg_to_rad deg = deg * (pi / 180)
 
 -- Styles
-
+-- (StrokeWidth, Stroke Colour, Fill Colour) , this isn't clear, TODO: make
+-- explicit
 type Style = (Double,String,String)
 
 -- Shapes
@@ -62,6 +83,7 @@ transform (Compose t1 t2) = mat_mul (transform t1) (transform t2)
 -- Drawings
 
 type Drawing = [(Transform,Shape,Style)]
+
 -- interpretation function for drawings
 
 getA :: Matrix Double -> Double
