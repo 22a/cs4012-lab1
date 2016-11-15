@@ -66,18 +66,21 @@ data Transform = Ident
 ident = Ident
 translate = Translate
 scale = Scale
-rotate a = Rotate (deg_to_rad a)
-skewx a = SkewX (deg_to_rad a)
-skewy a = SkewY (deg_to_rad a)
+rotate = Rotate
+skewx = SkewX
+skewy = SkewY
 t0 <+> t1 = Compose t0 t1
 
 transform :: Transform -> Matrix Double
 transform Ident = (trans_mat 1 0 0 1 0 0)
 transform (Translate tx ty) = (trans_mat 1 0 0 1 tx ty)
 transform (Scale sx sy) = (trans_mat sx 0 0 sy 0 0)
-transform (SkewX a) = (trans_mat 1 0 (tan a) 1 0 0)
-transform (SkewY a) = (trans_mat 1 (tan a) 0 1 0 0)
-transform (Rotate a) = (trans_mat (cos a) (sin a) (-sin a) (cos a) 0 0)
+transform (SkewX an) = (trans_mat 1 0 (tan a) 1 0 0)
+  where a = deg_to_rad an
+transform (SkewY an) = (trans_mat 1 (tan a) 0 1 0 0)
+  where a = deg_to_rad an
+transform (Rotate an) = (trans_mat (cos a) (sin a) (-sin a) (cos a) 0 0)
+  where a = deg_to_rad an
 transform (Compose t1 t2) = mat_mul (transform t1) (transform t2)
 
 -- Drawings

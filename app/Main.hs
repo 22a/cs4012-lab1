@@ -20,7 +20,7 @@ import Data.Monoid (mconcat)
 main = scotty 3000 $ do
     get "/" $ file "index.html"
 
-    get "/:end" $ do
+    get "/:enc" $ do
         encStr <- param "enc"
         let d = base64ToDrawing encStr
         let s = renderSvg (drawingToSvg d)
