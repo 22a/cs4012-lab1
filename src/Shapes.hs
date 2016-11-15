@@ -52,8 +52,7 @@ transform (Compose t1 t2) = mat_mul (transform t1) (transform t2)
 
 -- Drawings
 
-type Drawing = (Transform,Shape,Style)
-
+type Drawing = [(Transform,Shape,Style)]
 -- interpretation function for drawings
 
 getA :: Matrix Double -> Double

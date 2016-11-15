@@ -12,15 +12,18 @@
     </style>
   </head>
   <body>
-    <input type="text" id="default_input" value='( ( (scale 2 2) <+> (translate 2 3) ), Square,(1,"#000000","#ff0000") )'>
+    <input type="text" id="default_input" value='[( ( (scale 2 2) <+> (translate 2 3) ), Square,(1,"#000000","#ff0000") )]'>
     <button type="button" id="default_button" onclick="go('default_input')">Click Me!</button>
-
     <br>
 
-    <input type="text" id="wow_input" value='(Compose (Scale 2.0 2.0) (Translate 2.0 3.0),Square,(1,"#000000","#ff0000"))'>
+    <input type="text" id="wow_input" value='[(Compose (Scale 2.0 2.0) (Translate 2.0 3.0),Square,(1,"#000000","#ff0000"))]'>
     <button type="button" id="wow_button" onclick="go('wow_input')">Click Me!</button>
-
     <br>
+
+    <input type="text" id="double_input" value='[(Compose (Scale 2.0 2.0) (Translate 2.0 3.0),Square,(1,"#000000","#ff0000")),(Compose (Scale 1.0 1.0) (Translate 8.0 3.0),Square,(1,"#000000","#ff0000"))]'>
+    <button type="button" id="double_button" onclick="go('double_input')">Click Me!</button>
+    <br>
+
     <input type="text" id="input">
     <button type="button" id="button" onclick="go('input')">Click Me!</button>
     <script>
