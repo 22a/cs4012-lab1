@@ -6,12 +6,7 @@ module Shapes(Drawing,
              empty,
              circle,
              square,
-             getA,
-             getB,
-             getC,
-             getD,
-             getE,
-             getF) where
+             getMatTransVals) where
 
 import Data.Matrix
 
@@ -25,6 +20,9 @@ compose_trans t1 t2 = multStd t1 t2
 deg_to_rad :: Double -> Double
 deg_to_rad deg = deg * (pi / 180)
 
+getMatTransVals :: Matrix Double -> (Double,Double,Double,Double,Double,Double)
+getMatTransVals m = (getElem 1 1 m, getElem 2 1 m, getElem 1 2 m,
+                     getElem 2 2 m, getElem 3 1 m, getElem 2 3 m)
 
 -- Styles
 type StrokeWidth = Double
@@ -68,25 +66,4 @@ transform (Rotate an) = (trans_to_mat (cos a) (sin a) (-sin a) (cos a) 0 0)
 transform (t1 :> t2) = compose_trans (transform t1) (transform t2)
 
 -- Drawings
-
 type Drawing = [(Transform,Shape,Style)]
-
--- interpretation function for drawings
-
-getA :: Matrix Double -> Double
-getA m = getElem 1 1 m
-
-getB :: Matrix Double -> Double
-getB m = getElem 2 1 m
-
-getC :: Matrix Double -> Double
-getC m = getElem 1 2 m
-
-getD :: Matrix Double -> Double
-getD m = getElem 2 2 m
-
-getE :: Matrix Double -> Double
-getE m = getElem 1 3 m
-
-getF :: Matrix Double -> Double
-getF m = getElem 2 3 m

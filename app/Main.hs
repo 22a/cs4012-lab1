@@ -36,8 +36,14 @@ baseSvgDoc :: S.Svg -> S.Svg
 baseSvgDoc = S.docTypeSvg ! A.version "1.1" ! A.width "500" ! A.height "500" ! A.viewbox "0 0 50 50"
 
 shapeToSvgElement :: (Transform, Shape, Style) -> S.Svg
-shapeToSvgElement (ts,shape,(sw,sc,fc)) = (shapeToSvgShape shape) ! A.strokeWidth (S.toValue sw) ! A.stroke (S.toValue sc) ! A.fill (S.toValue fc) ! A.transform (S.matrix (getA m) (getB m) (getC m) (getD m) (getE m) (getF m))
-  where m = transform ts
+shapeToSvgElement (ts,sh,(sw,sc,fc)) = shape ! strokeWidth ! stroke ! fill ! trans
+  where shape = shapeToSvgShape sh
+        strokeWidth = A.strokeWidth (S.toValue sw)
+        stroke = A.stroke (S.toValue sc)
+        fill = A.fill (S.toValue fc)
+        trans = A.transform (S.matrix a b c d e f)
+        (a,b,c,d,e,f) = getMatTransVals m
+        m = transform ts
 
 shapeToSvgShape :: Shape -> S.Svg
 shapeToSvgShape shape

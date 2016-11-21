@@ -50,9 +50,10 @@
 
     <div id="input">
       <textarea id="drawing_input" onkeyup="go()">[
-  ((Translate 20.0 4.0) :> (SkewX -10),Square,(3,"#000000","#ff0000")),
-  ((Scale 1.0 1.0) :> (Translate 24.0 24.0),Square,(1,"#00ff00","#ff00ff")),
-  ((Translate 12.5 12.5) :> (SkewY 45),Circle,(1,"#00ffff","#0000ff"))
+  ( (Translate 24.0 24.0), Square, (1,"#00ff00","#ff00ff") ),
+  ( (Translate 20.0 4.0) :> (SkewX -10),Square,(2,"#000000","#ff0000") ),
+  ( (Translate 12.5 12.5) :> (SkewY 45), Circle, (1,"#00ffff","#0000ff") ),
+  ( ( (SkewY 10.0) :> (Translate 14.0 30.0) ) :> (Rotate 20), Square, (4,"#123456","#654321") )
 ]</textarea>
     </div>
 
