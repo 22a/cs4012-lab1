@@ -1,13 +1,13 @@
 name:                cs4012-lab1
-version:             0.1.0.0
-synopsis:            Initial project template from stack
+version:             0.1.0.1
+synopsis:            Web SVG builder
 description:         Please see README.md
-homepage:            https://github.com/githubuser/cs4012-lab1#readme
+homepage:            https://github.com/22a/cs4012-lab1#readme
 license:             BSD3
 license-file:        LICENSE
-author:              Author name here
-maintainer:          example@example.com
-copyright:           2016 Author name here
+author:              Peter Meehan
+maintainer:          meehanp2@tcd.ie
+copyright:           2016 Peter Meehan
 category:            Web
 build-type:          Simple
 -- extra-source-files:
@@ -17,7 +17,7 @@ library
   hs-source-dirs:      src
   exposed-modules:     Shapes
   build-depends:       base >= 4.7 && < 5
-                    ,matrix
+                     , matrix
   default-language:    Haskell2010
 
 executable cs4012-lab1-exe
