@@ -22,7 +22,7 @@ deg_to_rad deg = deg * (pi / 180)
 
 getMatTransVals :: Matrix Double -> (Double,Double,Double,Double,Double,Double)
 getMatTransVals m = (getElem 1 1 m, getElem 2 1 m, getElem 1 2 m,
-                     getElem 2 2 m, getElem 3 1 m, getElem 2 3 m)
+                     getElem 2 2 m, getElem 1 3 m, getElem 2 3 m)
 
 -- Styles
 type StrokeWidth = Double
@@ -66,4 +66,4 @@ transform (Rotate an) = (trans_to_mat (cos a) (sin a) (-sin a) (cos a) 0 0)
 transform (t1 :> t2) = compose_trans (transform t1) (transform t2)
 
 -- Drawings
-type Drawing = [(Transform,Shape,Style)]
+type Drawing = [(Shape, Style, Transform)]

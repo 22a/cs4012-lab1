@@ -4,7 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
     <title>SVGoodness</title>
-    <link rel='shortcut icon' href='https://meehan.co/favicon.ico' type='image/x-icon'/ >
+    <link rel='shortcut icon' href='https://meehan.co/favicon.ico' type='image/x-icon'>
+    <link href="https://fonts.googleapis.com/css?family=Oxygen+Mono" rel="stylesheet">
     <style type="text/css" media="screen">
       html{
         height: 100%;
@@ -30,30 +31,40 @@
         -moz-box-shadow: 0 0 15px rgb(0, 89, 200);
         -webkit-box-shadow: 0 0 15px rgb(0, 89, 200);
         -o-box-shadow: 0 0 15px rgb(0, 89, 200);
+        font-family: 'Oxygen Mono', monospace;
       }
       iframe{
         height: 95vh;
-        width: 50vw;
+        width: 40vw;
       }
       #input{
         position: absolute;
-        margin-left: 50vw;
-        width: 45vw;
+        margin-left: 40vw;
+        width: 55vw;
         height: 80vh;
         z-index: 9999;
-        margin-top: 5vh;
+        margin-top: 8vh;
         margin-bottom: 5vh;
+      }
+      h1{
+        position: absolute;
+        width:100vw;
+        font-family: 'Oxygen Mono', monospace;
+        font-size: 16px;
+        margin-top: 5px;
       }
     </style>
   </head>
   <body>
-
+    <h1 align="center">
+      <a href="https://github.com/22a/cs4012-lab1" target="_blank">SVGoodness</a> 💮  <a href="https://meehan.co" target="_blank">Peter Meehan</a>  13318021
+    </h1>
     <div id="input">
       <textarea id="drawing_input" onkeyup="go()">[
-  ( (Translate 24.0 24.0), Square, (1,"#00ff00","#ff00ff") ),
-  ( (Translate 20.0 4.0) :> (SkewX -10),Square,(2,"#000000","#ff0000") ),
-  ( (Translate 12.5 12.5) :> (SkewY 45), Circle, (1,"#00ffff","#0000ff") ),
-  ( ( (SkewY 10.0) :> (Translate 14.0 30.0) ) :> (Rotate 20), Square, (4,"#123456","#654321") )
+  ( Square, (1,"#00ff00","#ff00ff"), (Translate 24.0 24.0) ),
+  ( Square, (2,"#000000","#ff0000"), (Translate 20.0 4.0) :> (SkewX -10) ),
+  ( Circle, (1,"#00ffff","#0000ff"), (Translate 12.5 12.5) :> (SkewY 45) ),
+  ( Square, (4,"#123456","#654321"), ( (SkewY 10.0) :> (Translate 14.0 30.0) ) :> (Rotate 20) )
 ]</textarea>
     </div>
 

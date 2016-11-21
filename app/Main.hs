@@ -35,8 +35,8 @@ drawingToSvg shapes = baseSvgDoc $ mapM_ shapeToSvgElement shapes
 baseSvgDoc :: S.Svg -> S.Svg
 baseSvgDoc = S.docTypeSvg ! A.version "1.1" ! A.width "500" ! A.height "500" ! A.viewbox "0 0 50 50"
 
-shapeToSvgElement :: (Transform, Shape, Style) -> S.Svg
-shapeToSvgElement (ts,sh,(sw,sc,fc)) = shape ! strokeWidth ! stroke ! fill ! trans
+shapeToSvgElement :: (Shape, Style, Transform) -> S.Svg
+shapeToSvgElement (sh, (sw,sc,fc), ts) = shape ! strokeWidth ! stroke ! fill ! trans
   where shape = shapeToSvgShape sh
         strokeWidth = A.strokeWidth (S.toValue sw)
         stroke = A.stroke (S.toValue sc)
