@@ -2,6 +2,8 @@
 
 A web service that lets you describe drawings in a custom shape DSL and have them rendered as SVG in realtime in front of your very eyes.
 
+![Screenshot of SVGoodness](/.github/screenshot.png?raw=true "Screenshot of SVGoodness")
+
 
 ## Prerequisites
 
