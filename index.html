@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
     <title>SVGoodness</title>
+    <link rel='shortcut icon' href='https://meehan.co/favicon.ico' type='image/x-icon'/ >
     <style type="text/css" media="screen">
       html{
         height: 100%;
@@ -14,34 +15,48 @@
         height: 100%;
         width: 100%;
       }
-      input{
+      textarea{
         width: 100%;
         height: 100%;
         background-color: rgba(0,0,0,0.6);
         color: white;
         border: none;
         outline: none;
+        padding: 0px;
+        resize: none;
+        padding: 10px;
+        border-radius: 3px;
+        box-shadow: 0 0 15px rgb(0, 89, 200);
+        -moz-box-shadow: 0 0 15px rgb(0, 89, 200);
+        -webkit-box-shadow: 0 0 15px rgb(0, 89, 200);
+        -o-box-shadow: 0 0 15px rgb(0, 89, 200);
       }
       iframe{
-        height: 100%;
-        width: 100%;
+        height: 95vh;
+        width: 50vw;
       }
       #input{
         position: absolute;
-        bottom: 20px;
-        width: 75vw;
-        height: 40px;
-        padding-left: 12.5vw;
+        margin-left: 50vw;
+        width: 45vw;
+        height: 80vh;
         z-index: 9999;
+        margin-top: 5vh;
+        margin-bottom: 5vh;
       }
     </style>
   </head>
   <body>
-    <iframe id="render-frame" src="about:blank" frameborder="0"></iframe>
 
     <div id="input">
-      <input type="text" id="drawing_input" value='[(Compose (Translate 20.0 4.0) (SkewX -10),Square,(3,"#000000","#ff0000")),(Compose (Scale 1.0 1.0) (Translate 24.0 24.0),Square,(1,"#00ff00","#ff00ff")),(Compose (Translate 12.5 12.5) (SkewY 45),Circle,(1,"#00ffff","#0000ff"))]' onkeyup="go()">
+      <textarea id="drawing_input" onkeyup="go()">[
+  (Compose (Translate 20.0 4.0) (SkewX -10),Square,(3,"#000000","#ff0000")),
+  (Compose (Scale 1.0 1.0) (Translate 24.0 24.0),Square,(1,"#00ff00","#ff00ff")),
+  (Compose (Translate 12.5 12.5) (SkewY 45),Circle,(1,"#00ffff","#0000ff"))
+]</textarea>
     </div>
+
+    <iframe id="render-frame" src="about:blank" frameborder="0"></iframe>
 
     <script>
       var last = ""
