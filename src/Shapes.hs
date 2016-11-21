@@ -52,7 +52,7 @@ data Transform = Ident
            | Rotate Double
            | SkewX Double
            | SkewY Double
-           | Compose Transform Transform
+           | Transform :> Transform
              deriving (Show, Read)
 
 transform :: Transform -> Matrix Double
@@ -65,7 +65,7 @@ transform (SkewY an) = (trans_to_mat 1 (tan a) 0 1 0 0)
   where a = deg_to_rad an
 transform (Rotate an) = (trans_to_mat (cos a) (sin a) (-sin a) (cos a) 0 0)
   where a = deg_to_rad an
-transform (Compose t1 t2) = compose_trans (transform t1) (transform t2)
+transform (t1 :> t2) = compose_trans (transform t1) (transform t2)
 
 -- Drawings
 
